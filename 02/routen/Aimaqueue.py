@@ -7,7 +7,7 @@ Created on Wed Mar 25 10:14:45 2015
 
 #Aimaqueue.py V. 150417
 from operator import itemgetter
-
+import heapq
 
 class Queue():
     def __init__(self):
@@ -63,9 +63,8 @@ class SortedQueue(Queue):
         self.elements.remove(smallest)
         return smallest
 
-
     # should be sometime like this for log n instead of n
-    # but then
+    # but then we change put method as well. not sure if wanted
     # def put(self, new_element):
     #     heapq.heappush(self.elements, new_element)
 
