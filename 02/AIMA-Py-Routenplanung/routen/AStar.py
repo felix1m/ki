@@ -16,7 +16,7 @@ def main(graph, start_name, end_name):
         print ("Ziel entspricht Start")
         return
 
-    queue = Aimaqueue.FiFoQueue()
+    queue = Aimaqueue.SortedQueue()
     visited = []
     start = graph.get_node(start_name)
     queue.put((0, 0, None, start))
@@ -39,7 +39,8 @@ def main(graph, start_name, end_name):
         for edge in currentnode.get_edges():
             nextnode = edge.end()
             kosten = gcost + edge.weight
+            fcost = graph.luftlinie(start.name(), nextnode.name())
             graph.ausgabe(currentnode.name(), nextnode.name(), fcost, kosten,
                           "expandieren")
-            queue.put((0, kosten, currentnode, nextnode))
+            queue.put((fcost, kosten, currentnode, nextnode))
         graph.ausgabe(currentnode.name(), "", fcost, gcost, "abgearbeitet")

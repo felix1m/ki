@@ -6,6 +6,8 @@ Created on Wed Mar 25 10:14:45 2015
 """
 
 #Aimaqueue.py V. 150417
+from operator import itemgetter
+
 
 class Queue():
     def __init__(self):
@@ -57,13 +59,18 @@ class SortedQueue(Queue):
         Queue.put(self, new_element)
 
     def get(self):
-# your code
-# your code
-# your code
-# your code
-# your code
-# your code
-        return() #your return argument
+        smallest =  min(self.elements, key=itemgetter(0))
+        self.elements.remove(smallest)
+        return smallest
+
+
+    # should be sometime like this for log n instead of n
+    # but then
+    # def put(self, new_element):
+    #     heapq.heappush(self.elements, new_element)
+
+    # def get(self):
+    #     return heapq.heappop(self.elements)
 
     def empty(self):
         Queue.empty(self)
