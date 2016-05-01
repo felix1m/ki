@@ -18,7 +18,8 @@ def main(zustand):
     graph = GameGraph("Match")
     graph.add_node(zustand, "max", None, None)
     # knotenname, knotentyp, elternknoten, bewertung
-    v = max_value(zustand)
+    infinity =  float("-Infinity")
+    v = max_value(zustand, -infinity, infinity)
     zustand = graph.get_node(zustand)
     for edge in zustand.get_edges():
         if edge.end().get_value() == v:
@@ -27,7 +28,7 @@ def main(zustand):
     return nachfolger
 
 
-def max_value(z):  # returns value
+def max_value(z, alpha, beta):  # returns value
     z = graph.get_node(z)
     if terminal_test(z.name()):
         return z.get_value()
@@ -62,13 +63,18 @@ def max_value(z):  # returns value
             else:  # kein terminalknoten, wird als min knoten hinzugefuegt.
                 graph.add_node(neu, "min", z.name(), None)
                 graph.add_edge(z.name(), neu, 0)
+
         for edge in z.get_edges():
-            v = max(v, min_value(edge.end().name()))
+            v = max(v, min_value(edge.end().name(), alpha, beta))
+            alpha = max(alpha, v)
+            if alpha >= beta:
+                z.set_value(v)
+                return v
         z.set_value(v)
         return v
 
 
-def min_value(z):
+def min_value(z, alpha, beta):
     z = graph.get_node(z)
     if terminal_test(z.name()):
         return z.get_value()
@@ -108,7 +114,11 @@ def min_value(z):
                 graph.add_edge(z.name(), neu, 0)
 
         for edge in z.get_edges():
-            v = min(v, max_value(edge.end().name()))
+            v = min(v, max_value(edge.end().name(), alpha, beta))
+            beta = min(beta, v)
+            if alpha >= beta:
+                z.set_value(v)
+                return v
         z.set_value(v)
         return v
 
