@@ -1,0 +1,6 @@
+Gras_wet
+4
+Cloudy;0;0;"" 0.5
+Rain;1;1;Cloudy;"Cloudy" 0.8,"-Cloudy" 0.2
+Sprinkler;1;1;Cloudy;"Cloudy" 0.1,"-Cloudy" 0.5
+Gras_wet;2;2;Rain Sprinkler;"Rain+Sprinkler" 0.99,"Rain+-Sprinkler" 0.9,"-Rain+Sprinkler" 0.9,"-Rain+-Sprinkler" 0.01
