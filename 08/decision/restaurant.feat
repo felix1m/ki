@@ -1,0 +1,16 @@
+Restaurant
+10
+Alternate Bar Fri/Sat Hungry Patrons Price Rain Reservation Type WaitEstimate
+12
+Yes No No Yes Some Expensive No Yes French 0-10 Yes
+Yes No No Yes Full Cheap No No Thai 30-60 No
+No Yes No No Some Cheap No No Burger 0-10 Yes
+Yes No Yes Yes Full Cheap No No Thai 10-30 Yes
+Yes No Yes No Full Expensive No Yes French >60 No
+No Yes No Yes Some Okay Yes Yes Italian 0-10 Yes
+No Yes No No None Cheap Yes No Burger 0-10 No
+No No No Yes Some Okay Yes Yes Thai 0-10 Yes
+No Yes Yes No Full Cheap Yes No Burger >60 No
+Yes Yes Yes Yes Full Expensive No Yes Italian 10-30 No
+No No No No None Cheap No No Thai 0-10 No
+Yes Yes Yes Yes Full Cheap No No Burger 30-60 Yes
