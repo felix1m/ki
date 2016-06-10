@@ -17,10 +17,14 @@ from os import path
 import math
 import random
 import numpy as np
-import matplotlib.pyplot as plt
-import hinton
-from matplotlib.figure import Figure
 import queue
+
+import matplotlib
+matplotlib.use("TkAgg")
+
+import matplotlib.pyplot as plt
+from matplotlib.figure import Figure
+import hinton
 
 
 # Fenster:
@@ -117,7 +121,7 @@ def logic():
     showknowledgebase = Button(ki, text="Show Knowledgebase",
                            command=lambda: show_knowledgebase(knowledgebase))
     showknowledgebase.grid(row=0, column=1)
-    
+
     # Read file and save it as a list of clauses, each clause consisting of a list of literals.
     # Each line in the input file is a clause, literals are separated through blank spaces, negative literals with - infront of them.
     # It have to be horn clauses (clauses with no more than one positive literal ).
@@ -126,7 +130,7 @@ def logic():
     folder = folder + "\\logic"
     name = filedialog.askopenfilename(filetypes=[("Clauses files","*.cls")], initialdir = (folder))
     try:
-        datei = open(name,"r")       
+        datei = open(name,"r")
         for line in datei:
             line=line.rstrip()
             literals= line.split(" ")
@@ -137,12 +141,12 @@ def logic():
                     if positive==0:
                         positive=1
                     else:
-                     
+
                         printfenster.insert(END, "There is at least one clause that is no horn clause! -> ")
                         raise Exception
                         knowledgebase=[]
             literals.sort()
-            knowledgebase.append(literals)  
+            knowledgebase.append(literals)
         datei.close()
         if not knowledgebase:
             printfenster.insert(END,"There are no clauses given in the input file! -> ")
@@ -169,13 +173,13 @@ def run_resolution(knowledgebase):
             if g[0]=="-":
                 goal.put([g[1:]])
             else:
-                goal.put(["-"+g])   
+                goal.put(["-"+g])
             #do resolution:
             importiert[algoindex-1].main(knowledgebase, printfenster, goal)
         #close input window:
         printfenster.insert(END, "\n" )
         window.destroy()
- 
+
     global sizedec
     global anzeigefenster
     if not error:
@@ -186,7 +190,7 @@ def run_resolution(knowledgebase):
         window.title("Input Goal")
         Label(window, text="What is your goal (please enter literal)?").grid(row=0)
         e1=Entry(window)
-        e1.grid(row=0,column=1)    
+        e1.grid(row=0,column=1)
         But=Button(window, text="Input Goal", command=getgoal)
         But.grid(row=3, column=1, sticky=W, pady=4)
     else:
@@ -245,7 +249,7 @@ def routefinding():
     folder = os.path.abspath(os.path.dirname("AIMA.py"))
     folder = folder.split("\\aima")[0]
     folder = folder + "\\routen"
-    name = filedialog.askopenfilename(filetypes=[("Map files", "*.map")], 
+    name = filedialog.askopenfilename(filetypes=[("Map files", "*.map")],
                                       initialdir=(folder))
     try:
         datei = open(name).read()
@@ -375,7 +379,7 @@ def play_matches():
     zustand = list(zustand)
     noch_da = int(zustand[0])
     pfad = ""
-    # angaben ueber die entscheidung treffen, 
+    # angaben ueber die entscheidung treffen,
     # Hoelzer verteilen
     for i in range(1, len(zustand), 1):
         pfad = pfad + zustand[i]
@@ -504,7 +508,7 @@ def restaurantffn():
     folder = os.path.abspath(os.path.dirname("AIMA.py"))
     folder = folder.split("\\aima")[0]
     folder = folder + "\\feedforward"
-    name = filedialog.askopenfilename(filetypes=[("Feature files", "*.feat")], 
+    name = filedialog.askopenfilename(filetypes=[("Feature files", "*.feat")],
                                                  initialdir=(folder))
     ffnname = name
     try:
@@ -547,14 +551,14 @@ def restaurantffn_net_topology():
     global graph
     global error
     global ffnname
-    
+
     number_nodes = [0, 0]
     graph = FFNetwork("", anzeigefenster, printfenster, ki)  # fuer clear_gui
-    
+
     folder = os.path.abspath(os.path.dirname("AIMA.py"))
     folder = folder.split("\\aima")[0]
     path = folder + "\\feedforward"
-    
+
     #path = os.path.abspath(os.path.dirname(__file__))
     # datei mit selben namen.ffn wie bsp werden geoeffnet
     ffnname = ffnname.split("/")
@@ -630,7 +634,7 @@ def restaurantffn_net_topology():
     except:
         error = True
         printfenster.insert(END, "Error\n")
-# Eigenschaften        
+# Eigenschaften
 def properties_ffn():
     global schwellwert
     global hintonnumber
@@ -639,7 +643,7 @@ def properties_ffn():
     global schwellwertffn
     global hintonnumberffn
     if not error:
-        
+
         def close_and_save():
             global schwellwert
             global hintonnumber
@@ -687,7 +691,7 @@ def enterbackprop():
     if not error:
         global graph
         prop = Toplevel()
-    
+
         def close():
             global ownexample
             try:
@@ -757,7 +761,7 @@ def enterbackprop():
                     printfenster.insert(END, "Couldn't decide!\n")
             except:
                 printfenster.insert(END, "Every Attribute has to be chosen!\n")
-        
+
         prop.title("Insert Example")
         patrons = IntVar()
         patrons.set(None)
@@ -771,7 +775,7 @@ def enterbackprop():
         price = IntVar()
         price.set(None)
         ttype = IntVar()
-        if ownexample != "": 
+        if ownexample != "":
             patrons.set(ownexample[0])
             wait.set(ownexample[1])
             alt.set(ownexample[2])
@@ -876,7 +880,7 @@ def rainbayes():
     probtable.grid(row=0, column=2)
     parameterbutton = Button(ki, text="Properties", command=properties_bayes)
     parameterbutton.grid(row=0, column=3)
-    
+
     folder = os.path.abspath(os.path.dirname("AIMA.py"))
     folder = folder.split("\\aima")[0]
     folder = folder + "\\bayes"
@@ -934,13 +938,13 @@ def rainbayes():
 # Einstellungen bayes:
 def properties_bayes():
     global rejection_sam_var
-    
+
     if not error:
         properties = Toplevel()
         properties.title("Properties")
-    
+
         def show_parents():
-    
+
             def close_save():
                 # var belgung iwo speichern
                 rejection_sam_var[1] = X.get()
@@ -950,7 +954,7 @@ def properties_bayes():
                 rejection_sam_var[2] = andereKnoten
                 rejection_sam_var[3] = n.get()
                 properties.destroy()
-    
+
             var = []
             j = 2
             v = 0
@@ -982,7 +986,7 @@ def properties_bayes():
         nlabel = Label(properties,
                        text="How many iterations?").grid(row=0, column=0)
         nEntry = Entry(properties, textvariable=n).grid(row=0, column=1)
-    
+
         sampleLabel = Label(properties, text="Node to sample:")
         sampleLabel.grid(row=1, column=0)
         X = StringVar()
@@ -1044,7 +1048,7 @@ def load_sampling():
             printfenster.insert(END, "\n")
             # ausgabe der wkeit
             # zeichnen(erfragter wird blau, bedinungen fuer die anderen gruen/rot)
-                                    
+
             #1. blauer Knoten:
             for node in graph.get_nodes():
                 if rejection_sam_var[1] == node.name():
@@ -1083,7 +1087,7 @@ def load_sampling():
                         y = node.get_y_draw()
                         zeichne.zeichne_oval(x, y, x+60, y+40, "Red")
                         zeichne.schreibe_text_anzeige(x+7, y+20, node.name())
-                
+
             printfenster.insert(END, "\n")
     else:
         printfenster.insert(END, "Cannot execute due to previous error!\n")
@@ -1176,7 +1180,7 @@ def show_decision_tree(graph):
     if not error:
         tree = Tk()
         tree.title("Decision Tree")
-        xsize = sizedec[0] + 50 
+        xsize = sizedec[0] + 50
         ysize = sizedec[1] + 50
         treefenster = Canvas(tree, bg="white", height=ysize, width=xsize)
         treefenster.grid()
@@ -1199,7 +1203,7 @@ def filealgo():
     global importdict
     global algoindex
     global algoindex
-    
+
     def get_index(name):
         global algoindex
         algoindex = importdict[name] +1
@@ -1208,7 +1212,7 @@ def filealgo():
         printfenster.insert(END, "\n")
     folder = os.path.abspath(os.path.dirname("AIMA.py"))
     folder = folder.split("\\aima")[0]
-    name = filedialog.askopenfilename(filetypes=[("Python files", "*.py")], 
+    name = filedialog.askopenfilename(filetypes=[("Python files", "*.py")],
                                                  initialdir=(folder))
     directory = os.path.abspath(os.path.dirname(name))
     sys.path.append(directory)
@@ -1237,10 +1241,10 @@ def clear():
     pfad = ""
     noch_da = 4
     gesetzt = False
-    
+
     global rejection_sam_var
     rejection_sam_var = [graph, "", "", 20]
-    
+
     global schwellwertffn
     global hintonnumberffn
     global alphaffn
@@ -1249,16 +1253,16 @@ def clear():
     schwellwertffn.set(2.5)
     hintonnumberffn.set(20)
     alphaffn.set(0.2)
-    
-    
+
+
     # fuer alle:
     anzeigefenster.delete("all")
     printfenster.delete(1.0, END)
     if not error:
         zeichne.draw(graph, "", "")
-        
+
     umgebung = graph.__class__.__name__
-    
+
     if umgebung == "FFNetwork":
         matrix = np.empty([15, 15])  # fuer hinton diagramm
         #kantengewichte wieder zufaellig machen!
@@ -1357,7 +1361,7 @@ def clear_gui():
         probslabel.destroy()
         probtable.destroy()
         parameterbutton.destroy()
-        rejection_sam_var = [graph, "", "", 20] 
+        rejection_sam_var = [graph, "", "", 20]
         # falls nachher noch ein durchgang
     # falls vorher decide:
     if decidebutton != "":
@@ -1378,8 +1382,8 @@ def clear_gui():
     algomenu.delete(0, END)
     algomenu.add_command(label="Load", command=filealgo)
     algomenu.add_separator()
-    
-    
+
+
 def quit_aima():
     ki.destroy()
 
