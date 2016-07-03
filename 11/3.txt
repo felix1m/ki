@@ -1,0 +1,83 @@
+3a:
+=========
+T(I) = (I + c1) · c2
+
+c1 = -IminGiven,
+c2 = Imax / (ImaxGiven - IminGiven),
+T(I) = [ I – IminGiven ] · [ Imax / (ImaxGiven – IminGiven) ]
+
+IminGiven = 56
+Imax = 255
+ImaxGiven = 184
+
+-> T(I) =  [ I - 56 ] * [ 255 / (184-56)]
+= -> T(I) =  [ I - 56 ] * 1,9921875
+= I*1,9921875 - 111,5625
+
+
+für jede Zeile in Matrix:
+
+a=[184, 120, 72, 56,    160, 140, 64, 60,     128, 112, 96, 64,    120, 102, 88, 80]
+def T(i):
+  return i*1.9921875 - 111.5625
+print([round(T(i)) for i in a])
+
+=
+
+[255, 128, 32, 0,
+207, 167, 16, 8,
+143, 112, 80, 16,
+128, 92, 64, 48]
+
+
+
+3b:
+===============
+
+Kernel:
+
+k = [[0,075, 0,124, 0,075],
+        [0,124, 0,204, 0,124],
+        [0,075, 0,124, 0,075]]
+
+p1 = [[184, 120, 72],
+      [60, 140, 64],
+      [128, 112, 96]]
+
+
+p2 = [[120, 72, 56],
+      [140, 64, 60],
+      [112, 96, 64]]
+
+
+res1 = np.array(k) * np.array(p1)
+print(res1.sum(axis=0).sum(axis=0))
+108.704
+-> round: 109
+
+res2 = np.array(k) * np.array(p2)
+print(res2.sum(axis=0).sum(axis=0))
+85.088
+-> round: 85
+
+
+
+3c:
+===============
+
+Dem Bild padding geben, so dass es ein 6x6 Bild wird.
+Dabei soll jeder Pixel am neuen Rand den gleichen Wert haben wir der angerenzende Pixel am ursprünglichen Rand.
+Auf diese Weise nehmen wir an, dass das Bild mit gleichen Werten weiter gehen "würde". Somit bekommen wir das gleiche smoothing wie in der Bildmitte.
+
+Anschließend können wir mit dem gleichen Kernel einen Blur machen:
+
+p3 = [[128, 112, 96],
+      [120, 102, 96],
+      [120, 102, 96]]
+
+res3 = np.array(k) * np.array(p3)
+print(res3.sum(axis=0).sum(axis=0))
+= 107.128
+-> roundend: 107
+
+
